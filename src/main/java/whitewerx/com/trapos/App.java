@@ -43,6 +43,7 @@ import whitewerx.com.trapos.gateway.TextMessageGateway;
  * server.
  */
 public class App implements ShutdownListener {
+	
     private static final Logger l = LoggerFactory.getLogger(TextMessageGateway.class.getName());
 
     /** This is the number of event processors + 1 thread for the gateway */
@@ -58,10 +59,6 @@ public class App implements ShutdownListener {
     private EventProcessor[] eventProcessors = new EventProcessor[THREAD_POOL_SIZE - 1];
 
     private CountDownLatch shutdown = new CountDownLatch(1);
-
-    public static void main(String[] args) throws Exception {
-        new App().run(args);
-    }
 
     private void run(String[] args) throws InterruptedException {
 
@@ -192,5 +189,9 @@ public class App implements ShutdownListener {
         } catch (InterruptedException e) {
             // ignore as we are shutting down anyway.
         }
+    }
+    
+    public static void main(String[] args) throws Exception {
+        new App().run(args);
     }
 }

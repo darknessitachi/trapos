@@ -12,6 +12,14 @@ import whitewerx.com.trapos.model.Trade;
  * @author ewhite
  */
 public class MarketEvent {
+	
+	public static EventFactory<MarketEvent> FACTORY = new EventFactory<MarketEvent>() {
+		@Override
+        public MarketEvent newInstance() {
+            return new MarketEvent();
+        }
+    };
+    
     /** The delimited message from the gateway. */
     private String delimitedMessage = "";
 
@@ -50,12 +58,6 @@ public class MarketEvent {
     public String toString() {
         return "MarketEvent [delimitedMessage=" + delimitedMessage + ", trade=" + trade + ", rate=" + rate + "]";
     }
-
-    public static EventFactory<MarketEvent> FACTORY = new EventFactory<MarketEvent>() {
-        public MarketEvent newInstance() {
-            return new MarketEvent();
-        }
-    };
 
     /**
      * @return if there is a trade attached to the event.
