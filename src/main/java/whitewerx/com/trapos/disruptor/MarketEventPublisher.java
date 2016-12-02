@@ -13,6 +13,7 @@ import whitewerx.com.trapos.gateway.TextMessageSubscriber;
  * @author ewhite
  */
 public class MarketEventPublisher implements TextMessageSubscriber {
+	
     private static final Logger l = LoggerFactory.getLogger(MarketEventPublisher.class.getName());
     
     private RingBufferAdapter<MarketEvent> ringBuffer;
@@ -21,6 +22,7 @@ public class MarketEventPublisher implements TextMessageSubscriber {
         this.ringBuffer = ringBuffer;
     }
 
+    @Override
     public void accept(String delimitedMessage) {
         long sequence = ringBuffer.next();
         MarketEvent event = ringBuffer.get(sequence);

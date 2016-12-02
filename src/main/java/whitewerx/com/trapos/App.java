@@ -65,8 +65,7 @@ public class App implements ShutdownListener {
         // This is to keep my MBA from catching on fire...
         WaitStrategy waitStrategy = new BlockingWaitStrategy();
 
-        RingBuffer<MarketEvent> ringBuffer = new RingBuffer<MarketEvent>(MarketEvent.FACTORY, getClaimStrategy(),
-                waitStrategy);
+		RingBuffer<MarketEvent> ringBuffer = new RingBuffer<MarketEvent>(MarketEvent.FACTORY, getClaimStrategy(), waitStrategy);
 
         // Initial barrier
         SequenceBarrier translationBarrier = ringBuffer.newBarrier();
@@ -76,16 +75,14 @@ public class App implements ShutdownListener {
 
         // Add the portfolio position aggregator with a barrier after both
         // processors.
-        SequenceBarrier positionBarrier = ringBuffer.newBarrier(tradeProcessor.getSequence(),
-                rateProcessor.getSequence());
+		SequenceBarrier positionBarrier = ringBuffer.newBarrier(tradeProcessor.getSequence(), rateProcessor.getSequence());
         EventProcessor portfolioPositionProcessor = createPortfolioPositionProcessor(ringBuffer, positionBarrier);
         
         // Netty Event Publisher
         TextMessageGateway gateway = createGatewayEventPublisher(ringBuffer);
 
         // The producer can't move past this barrier.
-        ringBuffer.setGatingSequences(tradeProcessor.getSequence(), rateProcessor.getSequence(),
-                portfolioPositionProcessor.getSequence());
+		ringBuffer.setGatingSequences(tradeProcessor.getSequence(), rateProcessor.getSequence(), portfolioPositionProcessor.getSequence());
 
         // Start the threads
         tasks[0] = threadPool.submit(gateway);
@@ -148,8 +145,7 @@ public class App implements ShutdownListener {
      */
     private EventProcessor createTradeProcessor(RingBuffer<MarketEvent> ringBuffer, SequenceBarrier translationBarrier) {
         MarketTradeEventHandler tradeHandler = new MarketTradeEventHandler();
-        EventProcessor tradeProcessor = new BatchEventProcessor<MarketEvent>(ringBuffer, translationBarrier,
-                tradeHandler);
+		EventProcessor tradeProcessor = new BatchEventProcessor<MarketEvent>(ringBuffer, translationBarrier, tradeHandler);
         eventProcessors[0] = tradeProcessor;
         return tradeProcessor;
     }

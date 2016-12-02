@@ -15,6 +15,7 @@ import whitewerx.com.trapos.translators.TradeTranslator;
  * @author ewhite
  */
 public class MarketTradeEventHandler implements EventHandler<MarketEvent> {
+	
     private static final Logger l = LoggerFactory.getLogger(MarketTradeEventHandler.class.getName());
     
     private TradeTranslator translator;
@@ -27,11 +28,13 @@ public class MarketTradeEventHandler implements EventHandler<MarketEvent> {
         this(new TradeTranslator());
     }
 
+    @Override
     public void onEvent(MarketEvent marketEvent, long sequence, boolean endOfBatch) throws Exception {
         String delmitedTrade = marketEvent.getMessage();
         
         if(!translator.canHandle(delmitedTrade))
             return;
+        
         Trade trade = translator.translate(delmitedTrade);
 
         marketEvent.accept(trade);

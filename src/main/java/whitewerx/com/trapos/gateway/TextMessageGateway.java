@@ -32,6 +32,7 @@ import whitewerx.com.trapos.ShutdownListener;
  * @author ewhite
  */
 public class TextMessageGateway implements Runnable, ShutdownListener {
+	
     private static final Logger l = LoggerFactory.getLogger(TextMessageGateway.class.getName());
 
     private static final int TCPIP_PORT = 7000;
@@ -127,7 +128,7 @@ public class TextMessageGateway implements Runnable, ShutdownListener {
     private void configureTextMessageProcessingPipeline(ServerBootstrap bootstrap) {
         final ShutdownListener gatewayShutdownListener = this;
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-
+        	@Override
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline pipeline = Channels.pipeline();
 

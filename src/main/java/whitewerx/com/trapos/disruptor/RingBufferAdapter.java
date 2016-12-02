@@ -9,6 +9,7 @@ import com.lmax.disruptor.RingBuffer;
  * @author ewhite
  */
 public class RingBufferAdapter<T> {
+	
     private RingBuffer<T> delegate;
     
     public RingBufferAdapter(RingBuffer<T> delegate) {
